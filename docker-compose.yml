@@ -1,0 +1,25 @@
+version: '2'
+
+volumes:
+    logs:
+        driver: local
+services:
+    slim:
+        container_name: twitterdemo_slim
+        image: php:7-alpine
+        working_dir: /var/www
+        command: php -S 0.0.0.0:8880 -t public
+        ports:
+            - 8880:8880
+        volumes:
+            - .:/var/www
+        links:
+            - redis
+    redis:
+        container_name: twitterdemo_redis
+        image: redis:4.0-alpine
+        ports:
+             - "8081:6379"
+        command: redis-server --appendonly yes
+        volumes:
+            - ./docker/data/redis/:/data

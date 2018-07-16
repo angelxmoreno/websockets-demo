@@ -1,18 +1,6 @@
 <?php
-
-require '../vendor/autoload.php';
-
-$loader = (new \josegonzalez\Dotenv\Loader( '../.env'))
-    ->parse()
-    ->toEnv();
-$settings = require '../config/settings.php';
-$container = new \Slim\Container($settings);
-$app = new \Slim\App($container);
-$app->get('/', function (\Slim\Http\Request $req, \Slim\Http\Response $res, $args = []) {
-    $res->write('hello world');
-
-    return $res;
-})->setName('home');
+require '../config/bootstrap.php';
+require '../config/routes.php';
 // Run app
 try {
     $app->run();
